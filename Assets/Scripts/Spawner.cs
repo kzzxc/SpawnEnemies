@@ -10,20 +10,22 @@ public class Spawner : MonoBehaviour
     private float _spawnInterval = 2;
     private bool _isPlaying = true;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(spawnEnemy(_spawnInterval, _enemyPrefab, _spawnPoints));
     }
 
     private IEnumerator spawnEnemy(float interval, Enemy enemy, Transform[] spawnPoints)
     {
+        var spawnInterval = new WaitForSeconds(interval);
+
         while (_isPlaying)
         {
             foreach (Transform spawnPoint in spawnPoints)
             {
                 Instantiate(enemy, spawnPoint.position, Quaternion.identity);
 
-                yield return new WaitForSeconds(interval);
+                yield return spawnInterval;
             }
         }
     }
